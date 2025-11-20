@@ -15,7 +15,7 @@
     }
 })();
 
-// ===== SMOOTH SCROLL ANIMATIONS =====
+// ===== SMOOTH SCROLL ANIMATIONS & INTERACTION =====
 document.addEventListener('DOMContentLoaded', function() {
     // ===== THEME SWITCHER LOGIC =====
     const themeButtons = document.querySelectorAll('.theme-btn');
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Intersection Observer for fade-in animations
+    // ===== INTERSECTION OBSERVER FOR FADE-IN ANIMATIONS =====
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                const offsetTop = target.offsetTop - 20;
+                const offsetTop = target.offsetTop - 80; // Adjusted for spacing
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
@@ -157,15 +157,16 @@ Attendo vostre notizie!`;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            color: #0a0a0a;
+            background-color: var(--base-white);
+            color: var(--base-black);
             padding: 2rem 3rem;
-            border: 2px solid #0a0a0a;
+            border: 2px solid var(--base-black);
+            border-radius: 1rem;
             z-index: 10000;
             text-align: center;
             font-weight: 600;
             font-size: 1.125rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         `;
         successDiv.innerHTML = `
             <div style="margin-bottom: 1rem; font-size: 2rem;">✓</div>
@@ -187,150 +188,91 @@ Attendo vostre notizie!`;
         }, 3000);
     }
 
-    // ===== PARALLAX EFFECT ON HERO =====
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const parallaxSpeed = 0.5;
-            if (scrolled < window.innerHeight) {
-                heroSection.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+    // ===== ANTIGRAVITY CANVAS EFFECT =====
+    const canvas = document.getElementById('gravity-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        // Resize canvas
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Particle class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+                this.color = Math.random() > 0.5 ? 'rgba(255, 255, 255, 0.1)' : 'rgba(200, 200, 200, 0.05)';
             }
-        });
-    }
 
-    // ===== ADD ACTIVE STATE TO CTA BUTTONS =====
-    const ctaButtons = document.querySelectorAll('.cta-button');
-    ctaButtons.forEach(button => {
-        button.addEventListener('mousedown', function() {
-            this.style.transform = 'scale(0.98)';
-        });
-        button.addEventListener('mouseup', function() {
-            this.style.transform = 'scale(1)';
-        });
-        button.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
-    });
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
 
-    // ===== LAZY LOADING FOR IMAGES (if any are added later) =====
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.classList.add('loaded');
-                        observer.unobserve(img);
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Create particles
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        // Connect particles with lines
+        function connect() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.05 - distance/3000})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
                     }
                 }
-            });
-        });
-
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-
-    // ===== MOBILE MENU (if needed later) =====
-    // Reserved for future mobile navigation
-
-    // ===== PERFORMANCE: Debounce scroll events =====
-    let scrollTimeout;
-    window.addEventListener('scroll', function() {
-        if (scrollTimeout) {
-            window.cancelAnimationFrame(scrollTimeout);
-        }
-        scrollTimeout = window.requestAnimationFrame(function() {
-            // Additional scroll-based animations can go here
-        });
-    }, { passive: true });
-
-    // ===== PREVENT FORM DOUBLE SUBMISSION =====
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        let isSubmitting = false;
-        form.addEventListener('submit', function(e) {
-            if (isSubmitting) {
-                e.preventDefault();
-                return false;
             }
-            isSubmitting = true;
-            setTimeout(() => {
-                isSubmitting = false;
-            }, 2000);
-        });
-    });
-
-    // ===== ACCESSIBILITY: Focus styles =====
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Tab') {
-            document.body.classList.add('keyboard-nav');
         }
-    });
 
-    document.addEventListener('mousedown', function() {
-        document.body.classList.remove('keyboard-nav');
-    });
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            connect();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
 
     // ===== CONSOLE BRANDING =====
     console.log('%c🎯 CINEREO', 'font-size: 20px; font-weight: bold; color: #ffffff; background: #0a0a0a; padding: 10px;');
-    console.log('%cDigital presence for the AI era', 'font-size: 12px; color: #666;');
-    console.log('%cwww.cinereo.it', 'font-size: 12px; color: #ffffff;');
 });
-
-// ===== PERFORMANCE MONITORING =====
-window.addEventListener('load', function() {
-    // Log page load time
-    const perfData = window.performance.timing;
-    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-    console.log(`⚡ Page loaded in ${pageLoadTime}ms`);
-});
-
-// ===== ERROR HANDLING =====
-window.addEventListener('error', function(e) {
-    console.error('Error caught:', e.error);
-    // In production, you could send this to an error tracking service
-});
-
-// ===== UTILITY FUNCTIONS =====
-
-/**
- * Validate Italian phone number
- */
-function validateItalianPhone(phone) {
-    const cleaned = phone.replace(/[^\d+]/g, '');
-    return /^(\+39)?3\d{8,9}$/.test(cleaned);
-}
-
-/**
- * Validate URL
- */
-function validateURL(url) {
-    try {
-        new URL(url);
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-/**
- * Format currency
- */
-function formatCurrency(amount) {
-    return new Intl.NumberFormat('it-IT', {
-        style: 'currency',
-        currency: 'EUR'
-    }).format(amount);
-}
-
-// Export functions for potential use in other scripts
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        validateItalianPhone,
-        validateURL,
-        formatCurrency
-    };
-}
