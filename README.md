@@ -53,30 +53,142 @@ Il design segue l'estetica di **Cinereo** (www.cinereo.it):
 
 ## 🚀 Deployment
 
-### Hosting Consigliato
-- Netlify (consigliato)
-- Vercel
-- GitHub Pages
-- Server tradizionale con SSL
+### 🐳 Docker (Consigliato per Sviluppo/Produzione)
 
-### Setup Rapido
+Il metodo più veloce per avviare la landing page localmente o su server.
 
-1. **Clone repository**
+#### Requisiti
+- Docker installato ([Install Docker](https://docs.docker.com/get-docker/))
+- Docker Compose installato (incluso in Docker Desktop)
+
+#### Avvio Rapido
+
 ```bash
+# 1. Clone repository
 git clone https://github.com/ungattocinereo/landing-cinereo.git
 cd landing-cinereo
+
+# 2. Avvia con Docker Compose
+docker-compose up -d
+
+# 3. Apri il browser
+# http://localhost:3003
 ```
 
-2. **Deploy su Netlify**
+La landing page sarà disponibile su **http://localhost:3003** 🚀
+
+#### Comandi Docker Utili
+
+```bash
+# Avvia i container
+docker-compose up -d
+
+# Ferma i container
+docker-compose down
+
+# Visualizza logs
+docker-compose logs -f
+
+# Ricostruisci dopo modifiche
+docker-compose up -d --build
+
+# Verifica stato container
+docker-compose ps
+
+# Riavvia container
+docker-compose restart
+```
+
+#### Build Manuale Docker
+
+```bash
+# Build immagine
+docker build -t cinereo-landing:latest .
+
+# Run container sulla porta 3003
+docker run -d \
+  --name cinereo-landing \
+  -p 3003:80 \
+  --restart unless-stopped \
+  cinereo-landing:latest
+
+# Ferma container
+docker stop cinereo-landing
+
+# Rimuovi container
+docker rm cinereo-landing
+```
+
+#### Configurazione Porta
+
+Per cambiare la porta (esempio 8080), modifica `docker-compose.yml`:
+
+```yaml
+ports:
+  - "8080:80"  # Cambia 3003 in 8080
+```
+
+#### Deploy Docker in Produzione
+
+**VPS/Server Linux:**
+```bash
+# 1. Installa Docker sul server
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+
+# 2. Clone repository
+git clone https://github.com/ungattocinereo/landing-cinereo.git
+cd landing-cinereo
+
+# 3. Modifica numero WhatsApp in script.js
+nano script.js  # Linea 48
+
+# 4. Avvia con Docker Compose
+docker-compose up -d
+
+# 5. Configura reverse proxy (Nginx/Traefik) per SSL
+```
+
+**Con Nginx Reverse Proxy:**
+```nginx
+server {
+    listen 80;
+    server_name landing.cinereo.it;
+
+    location / {
+        proxy_pass http://localhost:3003;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+### ☁️ Hosting Cloud (Alternative)
+
+#### Netlify
 - Connetti repository GitHub
 - Build command: (none - static site)
 - Publish directory: `/`
-- Deploy!
+- Deploy automatico ad ogni push
 
-3. **Configurazione Dominio**
-- Aggiungi dominio personalizzato: `landing.cinereo.it`
-- Configura DNS records
-- SSL automatico via Let's Encrypt
+#### Vercel
+```bash
+npm i -g vercel
+vercel --prod
+```
+
+#### GitHub Pages
+```bash
+# Abilita GitHub Pages nelle impostazioni repository
+# Branch: main, Folder: / (root)
+```
+
+### 🖥️ Server Tradizionale
+- Upload via FTP/SSH
+- Webserver: Apache/Nginx
+- SSL: Let's Encrypt (certbot)
 
 ## ⚙️ Configurazione
 
@@ -183,9 +295,14 @@ landing-cinereo/
 ├── index.html          # Main HTML file
 ├── styles.css          # All styles
 ├── script.js           # JavaScript interactions
-├── README.md           # This file
 ├── robots.txt          # SEO crawler rules
-└── .gitignore          # Git ignore patterns
+├── sitemap.xml         # XML sitemap for search engines
+├── README.md           # Documentation
+├── .gitignore          # Git ignore patterns
+├── Dockerfile          # Docker image configuration
+├── docker-compose.yml  # Docker Compose orchestration
+├── .dockerignore       # Docker build ignore patterns
+└── nginx.conf          # Nginx web server configuration
 ```
 
 ## 🔄 Updates & Maintenance

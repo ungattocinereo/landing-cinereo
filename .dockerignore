@@ -1,0 +1,63 @@
+# Cinereo Landing Page - Docker Ignore
+# Exclude unnecessary files from Docker build
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation (already in image)
+README.md
+*.md
+
+# Docker files (don't copy into image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# IDE and Editor
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+.cache
+
+# Environment
+.env
+.env.*
+
+# Node modules (if any)
+node_modules
+package-lock.json
+yarn.lock
+
+# Build artifacts
+dist
+build
+out
+
+# Testing
+coverage
+.nyc_output
+
+# Backup files
+*.bak
+*.backup
