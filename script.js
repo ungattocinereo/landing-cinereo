@@ -3,87 +3,153 @@
  * Smooth animations, scroll effects, form handling, theme switching
  */
 
-// ===== THEME SWITCHING =====
-(function() {
-    // Get saved theme or default to 'auto'
-    const savedTheme = localStorage.getItem('cinereo-theme') || 'auto';
+// ===== THEME SWITCHING LOGIC =====
 
-    // Apply theme immediately to prevent flash
-    if (savedTheme === 'auto') {
-        // Don't set data-theme on body if auto (let CSS media query handle it)
-        document.documentElement.setAttribute('data-theme', 'auto');
+// Helper to determine system preference
+function getSystemTheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+// Helper to get the inverse of a theme
+function getInverseTheme(theme) {
+    return theme === 'light' ? 'dark' : 'light';
+}
+
+// Helper to get currently applied theme (from DOM)
+function getAppliedTheme() {
+    return document.documentElement.getAttribute('data-theme') || 'dark';
+}
+
+// ===== IIFE: APPLY THEME IMMEDIATELY TO PREVENT FLASH =====
+(function() {
+    // 1. Get saved state: 'auto' (default) or specific 'light'/'dark'
+    const savedState = localStorage.getItem('cinereo-theme-state') || 'auto';
+    
+    let themeToApply;
+
+    if (savedState === 'auto') {
+        themeToApply = getSystemTheme();
     } else {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        if (document.body) {
-            document.body.setAttribute('data-theme', savedTheme);
-        }
+        themeToApply = savedState;
+    }
+
+    // Apply to DOM
+    document.documentElement.setAttribute('data-theme', themeToApply);
+    if (document.body) {
+        document.body.setAttribute('data-theme', themeToApply);
     }
 })();
 
-// ===== SMOOTH SCROLL ANIMATIONS & INTERACTION =====
+
+// ===== MAIN INTERACTION LOOP =====
 document.addEventListener('DOMContentLoaded', function() {
-    // ===== THEME SWITCHER LOGIC =====
-    const themeButtons = document.querySelectorAll('.theme-btn');
+    
+    // Elements
     const body = document.body;
+    const btnAuto = document.querySelector('.theme-btn[data-theme="auto"]');
+    const btnInverse = document.querySelector('.theme-btn[data-theme="inverse"]');
+    const iconInverse = btnInverse ? btnInverse.querySelector('i') : null;
 
-    // Get current theme
-    let currentTheme = localStorage.getItem('cinereo-theme') || 'auto';
+    // State
+    let currentState = localStorage.getItem('cinereo-theme-state') || 'auto';
 
-    // Set initial active button
-    function updateActiveButton() {
-        themeButtons.forEach(btn => {
-            if (btn.dataset.theme === currentTheme) {
-                btn.classList.add('active');
+    // Function to update UI (Buttons & Icons)
+    function updateUI() {
+        const systemTheme = getSystemTheme();
+        const appliedTheme = getAppliedTheme(); // What's currently on screen
+
+        // 1. Update Active State
+        if (currentState === 'auto') {
+            btnAuto.classList.add('active');
+            btnInverse.classList.remove('active');
+        } else {
+            btnAuto.classList.remove('active');
+            btnInverse.classList.add('active');
+        }
+
+        // 2. Update Inverse Button Icon
+        // If current effective theme is dark, the inverse button should show a Sun (to switch to light)
+        // If current effective theme is light, the inverse button should show a Moon (to switch to dark)
+        if (iconInverse) {
+            if (appliedTheme === 'dark') {
+                iconInverse.className = 'ph ph-sun'; // Option to go light
+                btnInverse.setAttribute('title', 'Passa al tema chiaro');
             } else {
-                btn.classList.remove('active');
+                iconInverse.className = 'ph ph-moon'; // Option to go dark
+                btnInverse.setAttribute('title', 'Passa al tema scuro');
             }
-        });
-    }
-
-    // Apply theme
-    function applyTheme(theme) {
-        body.setAttribute('data-theme', theme);
-        currentTheme = theme;
-        localStorage.setItem('cinereo-theme', theme);
-        updateActiveButton();
-        
-        // Update canvas color immediately
-        if (window.updateCanvasColor) {
-            window.updateCanvasColor();
         }
     }
 
-    // Initialize
-    updateActiveButton();
-    if (currentTheme !== 'auto') {
-        applyTheme(currentTheme);
-    } else {
-        body.setAttribute('data-theme', 'auto');
+    // Function to Apply Theme
+    function applyTheme(state) {
+        currentState = state;
+        localStorage.setItem('cinereo-theme-state', state);
+
+        let themeToRender;
+        if (state === 'auto') {
+            themeToRender = getSystemTheme();
+        } else {
+            themeToRender = state;
+        }
+
+        // Set DOM
+        document.documentElement.setAttribute('data-theme', themeToRender);
+        body.setAttribute('data-theme', themeToRender);
+
+        // Update Canvas
+        if (window.updateCanvasColor) {
+            window.updateCanvasColor();
+        }
+
+        // Update Buttons
+        updateUI();
     }
 
+    // --- Event Handlers ---
 
-    // Theme button click handlers
-    themeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const theme = this.dataset.theme;
-            applyTheme(theme);
+    // 1. Auto Button Click
+    if (btnAuto) {
+        btnAuto.addEventListener('click', function() {
+            applyTheme('auto');
         });
-    });
+    }
 
-    // Listen for system theme changes when in auto mode
+    // 2. Inverse Button Click
+    if (btnInverse) {
+        btnInverse.addEventListener('click', function() {
+            // Logic:
+            // If we are in 'auto', we want to force the OPPOSITE of the system theme.
+            // If we are already manual, we toggle the manual theme.
+            
+            const currentEffective = getAppliedTheme();
+            const newTheme = getInverseTheme(currentEffective);
+            
+            applyTheme(newTheme);
+        });
+    }
+
+    // 3. System Preference Change Listener
     if (window.matchMedia) {
-        const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        darkModeQuery.addListener(function(e) {
-            if (currentTheme === 'auto') {
-                // Trigger re-render by toggling data attribute
-                body.setAttribute('data-theme', 'auto');
-                if (window.updateCanvasColor) {
-                    window.updateCanvasColor();
-                }
+        window.matchMedia('(prefers-color-scheme: light)').addListener(e => {
+            // Only auto-update if state is 'auto'
+            if (currentState === 'auto') {
+                applyTheme('auto'); // Re-evaluate system theme
+            } else {
+                // Just update UI (icons might need changing even if theme doesn't change, 
+                // though in manual mode, icons track the manual theme, so maybe not needed, 
+                // but good practice to sync)
+                updateUI(); 
             }
         });
     }
 
+    // Initialize UI on load
+    updateUI();
+
+
+    // ... (Rest of the code: Fade-in, Scroll, Form, Canvas) ...
+    
     // ===== INTERSECTION OBSERVER FOR FADE-IN ANIMATIONS =====
     const observerOptions = {
         threshold: 0.1,
@@ -270,10 +336,7 @@ Attendo vostre notizie!`;
 
         // Connect particles with lines
         function connect() {
-            const particleColor = getParticleColor();
-            // Extract alpha and rgb to create lines
-            // Simple hack: use the same color string but lower alpha for lines if possible,
-            // or just use the particle color logic directly.
+            // Removed unused variable
             
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i; j < particles.length; j++) {
