@@ -140,8 +140,9 @@ sh get-docker.sh
 git clone https://github.com/ungattocinereo/landing-cinereo.git
 cd landing-cinereo
 
-# 3. Modifica numero WhatsApp in script.js
-nano script.js  # Linea 48
+# 3. (Opzionale) Verifica contatti in script.js
+# Il numero WhatsApp è già configurato (+39 327 097 2329)
+# Se necessario, modifica linea 76
 
 # 4. Avvia con Docker Compose
 docker-compose up -d
@@ -194,12 +195,14 @@ vercel --prod
 
 ### WhatsApp Integration
 
-Modifica il numero WhatsApp in `script.js`:
+Il numero WhatsApp è già configurato in `script.js` (linea 76):
 
 ```javascript
-// Linea 48
-const cinereoWhatsApp = '393331234567'; // Sostituisci con numero reale
+// Cinereo WhatsApp number
+const cinereoWhatsApp = '393270972329';
 ```
+
+Se necessario modificare, aggiorna questa linea con il nuovo numero.
 
 ### Meta Tags SEO
 
@@ -316,8 +319,9 @@ landing-cinereo/
 
 Per domande o supporto:
 - **Website**: www.cinereo.it
-- **Email**: info@cinereo.it
-- **WhatsApp**: +39 333 123 4567
+- **Email**: greg@cinereo.it
+- **WhatsApp**: +39 327 097 2329
+- **Telegram**: @cinereo
 
 ## 📄 License
 

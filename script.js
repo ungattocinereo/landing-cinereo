@@ -72,8 +72,8 @@ Attendo vostre notizie!`;
             // Encode message for URL
             const encodedMessage = encodeURIComponent(message);
 
-            // Your WhatsApp number (replace with actual number)
-            const cinereoWhatsApp = '393331234567'; // Replace with real number
+            // Cinereo WhatsApp number
+            const cinereoWhatsApp = '393270972329';
 
             // Create WhatsApp link
             const whatsappURL = `https://wa.me/${cinereoWhatsApp}?text=${encodedMessage}`;
