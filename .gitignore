@@ -1,0 +1,65 @@
+# Cinereo Landing Page - Git Ignore
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Build outputs (if using build tools later)
+dist/
+build/
+out/
+
+# Dependencies (if adding npm later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Testing
+coverage/
+.nyc_output/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# Don't ignore these
+!.gitignore
+!robots.txt
