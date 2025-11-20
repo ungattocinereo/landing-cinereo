@@ -53,6 +53,13 @@ Il design segue l'estetica di **Cinereo** (www.cinereo.it):
 
 ## 🚀 Deployment
 
+### 📚 Guide Complete
+
+Per deployment su server di produzione, consulta le guide dettagliate:
+
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Guida completa step-by-step per Ubuntu 22.04.5 LTS
+- **[QUICK-START.md](./QUICK-START.md)** - Quick reference per deploy in 5 minuti
+
 ### 🐳 Docker (Consigliato per Sviluppo/Produzione)
 
 Il metodo più veloce per avviare la landing page localmente o su server.
@@ -60,6 +67,7 @@ Il metodo più veloce per avviare la landing page localmente o su server.
 #### Requisiti
 - Docker installato ([Install Docker](https://docs.docker.com/get-docker/))
 - Docker Compose installato (incluso in Docker Desktop)
+- Ubuntu 22.04.5 LTS (testato e verificato)
 
 #### Avvio Rapido
 
@@ -70,12 +78,16 @@ cd landing-cinereo
 
 # 2. Avvia con Docker Compose
 docker-compose up -d
+# oppure usa lo script
+./start.sh
 
 # 3. Apri il browser
 # http://localhost:3003
 ```
 
 La landing page sarà disponibile su **http://localhost:3003** 🚀
+
+**Per deployment completo su server Ubuntu 22.04.5 LTS, segui [DEPLOYMENT.md](./DEPLOYMENT.md)**
 
 #### Comandi Docker Utili
 
@@ -300,12 +312,16 @@ landing-cinereo/
 ├── script.js           # JavaScript interactions
 ├── robots.txt          # SEO crawler rules
 ├── sitemap.xml         # XML sitemap for search engines
-├── README.md           # Documentation
+├── README.md           # Main documentation
+├── DEPLOYMENT.md       # Complete deployment guide (Ubuntu 22.04.5 LTS)
+├── QUICK-START.md      # Quick reference (5-minute deploy)
 ├── .gitignore          # Git ignore patterns
 ├── Dockerfile          # Docker image configuration
 ├── docker-compose.yml  # Docker Compose orchestration
 ├── .dockerignore       # Docker build ignore patterns
-└── nginx.conf          # Nginx web server configuration
+├── nginx.conf          # Nginx web server configuration
+├── start.sh            # Quick start script
+└── stop.sh             # Quick stop script
 ```
 
 ## 🔄 Updates & Maintenance
