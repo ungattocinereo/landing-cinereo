@@ -207,12 +207,12 @@ section {
 .cta-button {
     display: inline-block;
     padding: 1rem 2.5rem;
-    background-color: var(--color-white);
-    color: var(--color-black);
+    background-color: var(--color-accent);
+    color: var(--color-accent-bg);
     text-decoration: none;
     font-weight: var(--font-weight-semibold);
     font-size: 1rem;
-    border: 2px solid var(--color-white);
+    border: 2px solid var(--color-accent);
     transition: all var(--transition-fast);
     cursor: pointer;
     text-align: center;
@@ -221,7 +221,7 @@ section {
 
 .cta-button:hover {
     background-color: transparent;
-    color: var(--color-white);
+    color: var(--color-text);
     transform: translateY(-2px);
 }
 
@@ -266,12 +266,12 @@ section {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--color-white);
+    background-color: var(--color-accent);
 }
 
 .hero-subtitle {
     font-size: clamp(1.125rem, 2vw, 1.5rem);
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     margin-bottom: var(--spacing-lg);
     max-width: 700px;
     line-height: 1.6;
@@ -293,15 +293,15 @@ section {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--color-white), transparent);
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
     animation: scanLine 4s ease-in-out infinite;
 }
 
 /* ===== REALITY CHECK SECTION ===== */
 .reality-section {
-    background-color: var(--color-dark);
-    border-top: 1px solid var(--color-grey-dark);
-    border-bottom: 1px solid var(--color-grey-dark);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .comparison-grid {
@@ -312,8 +312,8 @@ section {
 }
 
 .comparison-card {
-    background-color: var(--color-black);
-    border: 1px solid var(--color-grey-dark);
+    background-color: var(--color-accent-bg);
+    border: 1px solid var(--color-border);
     padding: var(--spacing-md);
     position: relative;
     transition: transform var(--transition-normal);
@@ -324,8 +324,8 @@ section {
 }
 
 .comparison-card.highlighted {
-    border: 2px solid var(--color-white);
-    background-color: var(--color-dark);
+    border: 2px solid var(--color-accent);
+    background-color: var(--color-bg-secondary);
 }
 
 .card-header {
@@ -334,7 +334,7 @@ section {
     align-items: center;
     margin-bottom: var(--spacing-md);
     padding-bottom: var(--spacing-sm);
-    border-bottom: 1px solid var(--color-grey-dark);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .card-header h3 {
@@ -345,11 +345,11 @@ section {
 .price-tag {
     font-size: 1.5rem;
     font-weight: var(--font-weight-bold);
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
 }
 
 .price-tag.premium {
-    color: var(--color-white);
+    color: var(--color-text);
 }
 
 .comparison-list {
@@ -360,31 +360,31 @@ section {
 .comparison-list li {
     padding: var(--spacing-xs) 0;
     font-size: 0.95rem;
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     line-height: 1.6;
 }
 
 .comparison-list.positive li {
-    color: var(--color-white);
+    color: var(--color-text);
 }
 
 .comparison-list.positive li::before {
     content: '✓ ';
-    color: var(--color-white);
+    color: var(--color-text);
     font-weight: var(--font-weight-bold);
 }
 
 .comparison-list.negative li::before {
     content: '× ';
-    color: var(--color-grey);
+    color: var(--color-text-tertiary);
 }
 
 .card-badge {
     position: absolute;
     top: -12px;
     right: var(--spacing-md);
-    background-color: var(--color-white);
-    color: var(--color-black);
+    background-color: var(--color-accent);
+    color: var(--color-accent-bg);
     padding: 0.25rem 1rem;
     font-size: 0.75rem;
     font-weight: var(--font-weight-semibold);
@@ -411,7 +411,7 @@ section {
 
 .tech-text {
     margin-bottom: var(--spacing-md);
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     font-size: 1.125rem;
 }
 
@@ -437,7 +437,7 @@ section {
     text-align: center;
     margin-bottom: var(--spacing-sm);
     font-weight: var(--font-weight-medium);
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -445,7 +445,7 @@ section {
 
 .visual-box {
     aspect-ratio: 1;
-    border: 2px solid var(--color-grey-dark);
+    border: 2px solid var(--color-border);
     position: relative;
     display: flex;
     align-items: center;
@@ -456,8 +456,8 @@ section {
 .visual-box.blurred {
     background: repeating-linear-gradient(
         45deg,
-        var(--color-grey-dark),
-        var(--color-grey-dark) 10px,
+        var(--color-bg-tertiary),
+        var(--color-bg-tertiary) 10px,
         transparent 10px,
         transparent 20px
     );
@@ -465,7 +465,7 @@ section {
 }
 
 .visual-box.structured {
-    border-color: var(--color-white);
+    border-color: var(--color-text);
 }
 
 .structure-pattern {
@@ -477,8 +477,8 @@ section {
 
 .data-block {
     height: 40px;
-    background-color: var(--color-grey-dark);
-    border: 1px solid var(--color-white);
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-accent);
 }
 
 .visual-status {
@@ -493,7 +493,7 @@ section {
 
 .visual-arrow {
     font-size: 2rem;
-    color: var(--color-grey);
+    color: var(--color-text-tertiary);
 }
 
 @media (max-width: 768px) {
@@ -504,8 +504,8 @@ section {
 
 /* ===== FEATURES SECTION ===== */
 .included-section {
-    background-color: var(--color-dark);
-    border-top: 1px solid var(--color-grey-dark);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
 }
 
 .features-grid {
@@ -528,7 +528,7 @@ section {
 .feature-icon {
     font-size: 2.5rem;
     margin-bottom: var(--spacing-sm);
-    color: var(--color-white);
+    color: var(--color-text);
     font-weight: var(--font-weight-light);
 }
 
@@ -538,7 +538,7 @@ section {
 }
 
 .feature-card p {
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     font-size: 0.95rem;
 }
 
@@ -550,8 +550,8 @@ section {
 .pricing-card {
     max-width: 600px;
     margin: 0 auto;
-    background-color: var(--color-dark);
-    border: 2px solid var(--color-white);
+    background-color: var(--color-bg-secondary);
+    border: 2px solid var(--color-accent);
     padding: var(--spacing-lg);
     position: relative;
 }
@@ -561,8 +561,8 @@ section {
     top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--color-white);
-    color: var(--color-black);
+    background-color: var(--color-accent);
+    color: var(--color-accent-bg);
     padding: 0.5rem 2rem;
     font-weight: var(--font-weight-bold);
     letter-spacing: 0.1em;
@@ -572,13 +572,13 @@ section {
 .pricing-header {
     text-align: center;
     padding: var(--spacing-md) 0;
-    border-bottom: 1px solid var(--color-grey-dark);
+    border-bottom: 1px solid var(--color-border);
     margin-bottom: var(--spacing-md);
 }
 
 .price-old {
     font-size: 1.5rem;
-    color: var(--color-grey);
+    color: var(--color-text-tertiary);
     text-decoration: line-through;
     margin-bottom: var(--spacing-xs);
 }
@@ -591,7 +591,7 @@ section {
 }
 
 .price-description {
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     font-size: 0.95rem;
 }
 
@@ -604,8 +604,8 @@ section {
 .pricing-features li {
     padding: var(--spacing-sm) 0;
     font-size: 1rem;
-    color: var(--color-grey-light);
-    border-bottom: 1px solid var(--color-grey-dark);
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .pricing-features li:last-child {
@@ -613,21 +613,21 @@ section {
 }
 
 .pricing-maintenance {
-    background-color: var(--color-grey-dark);
+    background-color: var(--color-bg-tertiary);
     padding: var(--spacing-md);
     margin: var(--spacing-md) 0;
     text-align: center;
     font-size: 0.95rem;
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
 }
 
 .pricing-guarantee {
     text-align: center;
     padding: var(--spacing-md);
-    border: 1px solid var(--color-grey-dark);
+    border: 1px solid var(--color-border);
     margin-bottom: var(--spacing-lg);
     font-size: 0.9rem;
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
 }
 
 .pricing-card .cta-button {
@@ -637,8 +637,8 @@ section {
 
 /* ===== EXAMPLES SECTION ===== */
 .examples-section {
-    background-color: var(--color-dark);
-    border-top: 1px solid var(--color-grey-dark);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
 }
 
 .examples-grid {
@@ -661,10 +661,10 @@ section {
 .mockup-screen {
     width: 200px;
     height: 400px;
-    border: 3px solid var(--color-white);
+    border: 3px solid var(--color-accent);
     border-radius: 20px;
     padding: var(--spacing-sm);
-    background-color: var(--color-black);
+    background-color: var(--color-accent-bg);
     position: relative;
 }
 
@@ -676,7 +676,7 @@ section {
     transform: translateX(-50%);
     width: 60px;
     height: 4px;
-    background-color: var(--color-grey-dark);
+    background-color: var(--color-bg-tertiary);
     border-radius: 2px;
 }
 
@@ -684,7 +684,7 @@ section {
     font-size: 0.75rem;
     font-weight: var(--font-weight-semibold);
     padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid var(--color-grey-dark);
+    border-bottom: 1px solid var(--color-border);
     margin-top: var(--spacing-md);
 }
 
@@ -694,7 +694,7 @@ section {
 
 .mockup-line {
     height: 8px;
-    background-color: var(--color-grey-dark);
+    background-color: var(--color-bg-tertiary);
     margin: var(--spacing-xs) 0;
     border-radius: 2px;
 }
@@ -708,7 +708,7 @@ section {
 }
 
 .example-card p {
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     font-size: 0.95rem;
 }
 
@@ -724,7 +724,7 @@ section {
 }
 
 .contact-subtitle {
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     margin-bottom: var(--spacing-lg);
     font-size: 1.125rem;
 }
@@ -741,9 +741,9 @@ section {
 .form-group textarea {
     width: 100%;
     padding: 1rem 1.5rem;
-    background-color: var(--color-dark);
-    border: 1px solid var(--color-grey-dark);
-    color: var(--color-white);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
     font-family: var(--font-main);
     font-size: 1rem;
     transition: border-color var(--transition-fast);
@@ -752,21 +752,21 @@ section {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--color-white);
+    border-color: var(--color-text);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: var(--color-grey);
+    color: var(--color-text-tertiary);
 }
 
 .contact-info {
     padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-grey-dark);
+    border-top: 1px solid var(--color-border);
 }
 
 .contact-info p {
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     margin-bottom: var(--spacing-md);
     text-align: center;
 }
@@ -784,13 +784,13 @@ section {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    color: var(--color-white);
+    color: var(--color-text);
     text-decoration: none;
     font-size: 1.125rem;
     font-weight: var(--font-weight-semibold);
     transition: transform var(--transition-fast);
     padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid var(--color-grey-dark);
+    border: 1px solid var(--color-border);
     min-width: 280px;
     justify-content: flex-start;
 }
@@ -799,7 +799,7 @@ section {
 .telegram-link:hover,
 .email-link:hover {
     transform: translateX(5px);
-    border-color: var(--color-white);
+    border-color: var(--color-text);
 }
 
 .wa-icon,
@@ -810,8 +810,8 @@ section {
 
 /* ===== FOOTER ===== */
 .footer {
-    background-color: var(--color-dark);
-    border-top: 1px solid var(--color-grey-dark);
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
     padding: var(--spacing-lg) 0;
 }
 
@@ -832,7 +832,7 @@ section {
 }
 
 .footer-brand p {
-    color: var(--color-grey);
+    color: var(--color-text-tertiary);
     font-size: 0.85rem;
 }
 
@@ -843,24 +843,24 @@ section {
 }
 
 .footer-links a {
-    color: var(--color-grey-light);
+    color: var(--color-text-secondary);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color var(--transition-fast);
 }
 
 .footer-links a:hover {
-    color: var(--color-white);
+    color: var(--color-text);
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: var(--spacing-md);
-    border-top: 1px solid var(--color-grey-dark);
+    border-top: 1px solid var(--color-border);
 }
 
 .footer-bottom p {
-    color: var(--color-grey);
+    color: var(--color-text-tertiary);
     font-size: 0.85rem;
 }
 
@@ -1008,107 +1008,3 @@ section {
     }
 }
 
-/* ===== THEME-SPECIFIC UPDATES ===== */
-/* Update old variable references to use new theme variables */
-.reality-section,
-.included-section,
-.examples-section {
-    background-color: var(--color-bg-secondary);
-    border-color: var(--color-border);
-}
-
-.comparison-card,
-.pricing-card,
-.form-group input,
-.form-group textarea {
-    background-color: var(--color-bg);
-    border-color: var(--color-border);
-    color: var(--color-text);
-}
-
-.comparison-card.highlighted {
-    border-color: var(--color-accent);
-    background-color: var(--color-bg-secondary);
-}
-
-.card-badge,
-.pricing-badge {
-    background-color: var(--color-accent);
-    color: var(--color-accent-bg);
-}
-
-.footer {
-    background-color: var(--color-bg-secondary);
-    border-color: var(--color-border);
-}
-
-.footer-brand p,
-.pricing-maintenance,
-.pricing-guarantee,
-.contact-info p,
-.hero-subtitle,
-.tech-text,
-.price-description,
-.pricing-features li,
-.feature-card p,
-.example-card p {
-    color: var(--color-text-secondary);
-}
-
-.cta-button {
-    background-color: var(--color-accent);
-    color: var(--color-accent-bg);
-    border-color: var(--color-accent);
-}
-
-.cta-button:hover {
-    background-color: transparent;
-    color: var(--color-accent);
-}
-
-.whatsapp-link,
-.telegram-link,
-.email-link,
-.footer-links a {
-    color: var(--color-text);
-    border-color: var(--color-border);
-}
-
-.whatsapp-link:hover,
-.telegram-link:hover,
-.email-link:hover,
-.footer-links a:hover {
-    border-color: var(--color-border-hover);
-}
-
-.visual-box.structured {
-    border-color: var(--color-accent);
-}
-
-.data-block {
-    background-color: var(--color-bg-tertiary);
-    border-color: var(--color-accent);
-}
-
-.mockup-screen {
-    border-color: var(--color-accent);
-    background-color: var(--color-bg);
-}
-
-.mockup-header {
-    border-color: var(--color-border);
-}
-
-.mockup-line {
-    background-color: var(--color-bg-tertiary);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: var(--color-accent);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: var(--color-text-tertiary);
-}

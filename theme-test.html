@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Test - Cinereo</title>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .test-container {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            border: 1px solid var(--color-border);
+            background: var(--color-bg-secondary);
+        }
+        .test-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+        .test-text {
+            color: var(--color-text-secondary);
+            margin: 0.5rem 0;
+        }
+        .test-button {
+            margin: 1rem 0.5rem 0 0;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="test-container">
+        <h1 class="test-title">Theme System Test</h1>
+
+        <div class="test-section">
+            <h2 class="test-title">Current Theme Variables</h2>
+            <div class="test-text">Background: <span id="bg-color"></span></div>
+            <div class="test-text">Text: <span id="text-color"></span></div>
+            <div class="test-text">Accent: <span id="accent-color"></span></div>
+            <div class="test-text">Border: <span id="border-color"></span></div>
+        </div>
+
+        <div class="test-section">
+            <h2 class="test-title">Theme Buttons</h2>
+            <button class="cta-button test-button" onclick="setTheme('dark')">Dark Theme</button>
+            <button class="cta-button test-button" onclick="setTheme('light')">Light Theme</button>
+            <button class="cta-button test-button" onclick="setTheme('auto')">Auto Theme</button>
+        </div>
+
+        <div class="test-section">
+            <h2 class="test-title">Icon Test</h2>
+            <div style="display: flex; gap: 1rem; font-size: 2rem;">
+                <i class="ph ph-sun"></i>
+                <i class="ph ph-moon"></i>
+                <i class="ph ph-monitor"></i>
+                <i class="ph ph-brain"></i>
+                <i class="ph ph-palette"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-btn" data-theme="auto" title="Sistema">
+            <i class="ph ph-monitor"></i>
+        </button>
+        <button class="theme-btn" data-theme="light" title="Chiaro">
+            <i class="ph ph-sun"></i>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Scuro">
+            <i class="ph ph-moon"></i>
+        </button>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('cinereo-theme', theme);
+            updateColors();
+        }
+
+        function updateColors() {
+            const styles = getComputedStyle(document.body);
+            document.getElementById('bg-color').textContent = styles.getPropertyValue('--color-bg');
+            document.getElementById('text-color').textContent = styles.getPropertyValue('--color-text');
+            document.getElementById('accent-color').textContent = styles.getPropertyValue('--color-accent');
+            document.getElementById('border-color').textContent = styles.getPropertyValue('--color-border');
+        }
+
+        // Update colors on load
+        updateColors();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
