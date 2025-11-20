@@ -5,13 +5,19 @@
 
 // ===== THEME SWITCHING =====
 (function() {
-    // Get saved theme or default to 'dark'
-    const savedTheme = localStorage.getItem('cinereo-theme') || 'dark';
+    // Get saved theme or default to 'auto'
+    const savedTheme = localStorage.getItem('cinereo-theme') || 'auto';
 
     // Apply theme immediately to prevent flash
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    if (document.body) {
-        document.body.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'auto') {
+        // Don't set data-theme on body if auto (let CSS media query handle it)
+        // Or set it to auto if your CSS uses [data-theme="auto"]
+        document.documentElement.setAttribute('data-theme', 'auto');
+    } else {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (document.body) {
+            document.body.setAttribute('data-theme', savedTheme);
+        }
     }
 })();
 
@@ -22,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const body = document.body;
 
     // Get current theme
-    let currentTheme = localStorage.getItem('cinereo-theme') || 'dark';
+    let currentTheme = localStorage.getItem('cinereo-theme') || 'auto';
 
     // Set initial active button
     function updateActiveButton() {
@@ -44,7 +50,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initialize
-    applyTheme(currentTheme);
+    updateActiveButton();
+    if (currentTheme !== 'auto') {
+        applyTheme(currentTheme);
+    } else {
+        body.setAttribute('data-theme', 'auto');
+    }
+
 
     // Theme button click handlers
     themeButtons.forEach(button => {

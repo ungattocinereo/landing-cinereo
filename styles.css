@@ -498,7 +498,7 @@ section {
 .footer {
     border-top: 1px solid var(--border-glass);
     background: rgba(0,0,0,0.2);
-    padding: 4rem 0;
+    padding: 4rem 0 2rem; /* Reduced bottom padding as we are organizing footer bottom */
     margin-top: 4rem;
 }
 
@@ -507,6 +507,7 @@ section {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 2rem;
+    margin-bottom: 2rem; /* Add spacing between links and bottom part */
 }
 
 .footer-links {
@@ -524,25 +525,41 @@ section {
     color: var(--color-text);
 }
 
-/* Theme Switcher */
+/* Footer Bottom Area */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-glass);
+    padding-top: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.copyright {
+    opacity: 0.4;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+/* Theme Switcher - Redesigned */
 .theme-switcher {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
+    position: static; /* Reset from fixed */
     background: var(--bg-glass);
     backdrop-filter: blur(10px);
-    padding: 0.5rem;
+    padding: 0.3rem;
     border-radius: 50px;
     display: flex;
-    gap: 0.5rem;
+    gap: 0.3rem;
     border: 1px solid var(--border-glass);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    z-index: 100;
+    box-shadow: none; /* Reset shadow if needed */
+    z-index: 10;
+    transform: none; /* Reset transform */
 }
 
 .theme-btn {
-    width: 36px;
-    height: 36px;
+    width: 30px; /* Smaller buttons */
+    height: 30px;
     border-radius: 50%;
     border: none;
     background: transparent;
@@ -552,6 +569,7 @@ section {
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
+    font-size: 1rem; /* Adjust icon size */
 }
 
 .theme-btn.active {
@@ -585,5 +603,31 @@ section {
     h1 { font-size: 2.5rem; }
     .hero-section { padding-top: 80px; min-height: auto; padding-bottom: 4rem; }
     .comparison-grid, .features-grid, .examples-grid { grid-template-columns: 1fr; }
-    .theme-switcher { bottom: 1rem; right: 1rem; }
+    
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .footer-links {
+        gap: 1.5rem;
+    }
+
+    .footer-bottom {
+        flex-direction: row; /* Keep them in row */
+        justify-content: space-between; /* Space them out */
+        align-items: center;
+    }
+
+    .copyright {
+        text-align: left;
+        font-size: 0.8rem;
+        max-width: 60%; /* Allow some space for the switcher */
+    }
+    
+    .theme-switcher {
+        /* On mobile, it's already positioned correctly by flexbox in footer-bottom */
+    }
 }
