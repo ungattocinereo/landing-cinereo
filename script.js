@@ -11,7 +11,6 @@
     // Apply theme immediately to prevent flash
     if (savedTheme === 'auto') {
         // Don't set data-theme on body if auto (let CSS media query handle it)
-        // Or set it to auto if your CSS uses [data-theme="auto"]
         document.documentElement.setAttribute('data-theme', 'auto');
     } else {
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -47,6 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
         currentTheme = theme;
         localStorage.setItem('cinereo-theme', theme);
         updateActiveButton();
+        
+        // Update canvas color immediately
+        if (window.updateCanvasColor) {
+            window.updateCanvasColor();
+        }
     }
 
     // Initialize
@@ -73,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (currentTheme === 'auto') {
                 // Trigger re-render by toggling data attribute
                 body.setAttribute('data-theme', 'auto');
+                if (window.updateCanvasColor) {
+                    window.updateCanvasColor();
+                }
             }
         });
     }
@@ -207,6 +214,12 @@ Attendo vostre notizie!`;
         let width, height;
         let particles = [];
 
+        // Helper to get color from CSS variable
+        function getParticleColor() {
+            const style = getComputedStyle(document.body);
+            return style.getPropertyValue('--particle-color').trim() || 'rgba(255, 255, 255, 0.1)';
+        }
+
         // Resize canvas
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -216,6 +229,12 @@ Attendo vostre notizie!`;
         window.addEventListener('resize', resize);
         resize();
 
+        // Make color updatable globally
+        window.updateCanvasColor = function() {
+             const newColor = getParticleColor();
+             particles.forEach(p => p.color = newColor);
+        }
+
         // Particle class
         class Particle {
             constructor() {
@@ -224,7 +243,7 @@ Attendo vostre notizie!`;
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.size = Math.random() * 2 + 1;
-                this.color = Math.random() > 0.5 ? 'rgba(255, 255, 255, 0.1)' : 'rgba(200, 200, 200, 0.05)';
+                this.color = getParticleColor();
             }
 
             update() {
@@ -251,6 +270,11 @@ Attendo vostre notizie!`;
 
         // Connect particles with lines
         function connect() {
+            const particleColor = getParticleColor();
+            // Extract alpha and rgb to create lines
+            // Simple hack: use the same color string but lower alpha for lines if possible,
+            // or just use the particle color logic directly.
+            
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -258,12 +282,18 @@ Attendo vostre notizie!`;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < 150) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.05 - distance/3000})`;
+                        // Dynamic opacity based on distance
+                        let opacity = 0.05 - distance/3000;
+                        if (opacity < 0) opacity = 0;
+                        
+                        ctx.strokeStyle = particles[i].color; // Use particle color
+                        ctx.globalAlpha = opacity; // Set global alpha for the line
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
+                        ctx.globalAlpha = 1.0; // Reset
                     }
                 }
             }
