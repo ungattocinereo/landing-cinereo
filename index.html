@@ -12,9 +12,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-theme="dark">
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
         <div class="container">
@@ -131,37 +132,49 @@
             <h2 class="section-title fade-in-scroll">Cosa è incluso: Pacchetto All-in-One</h2>
             <div class="features-grid">
                 <div class="feature-card fade-in-scroll">
-                    <div class="feature-icon">✦</div>
+                    <div class="feature-icon">
+                        <i class="ph ph-palette"></i>
+                    </div>
                     <h3>Design Cinereo</h3>
                     <p>Estetica che ispira fiducia. Nessun template anonimo.</p>
                 </div>
 
                 <div class="feature-card fade-in-scroll">
-                    <div class="feature-icon">⟳</div>
+                    <div class="feature-icon">
+                        <i class="ph ph-arrows-clockwise"></i>
+                    </div>
                     <h3>Sync con Social</h3>
                     <p>Importiamo foto e stile dal tuo Instagram/Facebook.</p>
                 </div>
 
                 <div class="feature-card fade-in-scroll">
-                    <div class="feature-icon">◈</div>
+                    <div class="feature-icon">
+                        <i class="ph ph-cloud-check"></i>
+                    </div>
                     <h3>Dominio + Hosting</h3>
                     <p>Primo anno incluso. Zero costi nascosti.</p>
                 </div>
 
                 <div class="feature-card fade-in-scroll">
-                    <div class="feature-icon">◐</div>
+                    <div class="feature-icon">
+                        <i class="ph ph-map-pin"></i>
+                    </div>
                     <h3>WhatsApp & Maps</h3>
                     <p>Bottoni di contatto rapido che funzionano davvero.</p>
                 </div>
 
                 <div class="feature-card fade-in-scroll">
-                    <div class="feature-icon">⊞</div>
+                    <div class="feature-icon">
+                        <i class="ph ph-shield-check"></i>
+                    </div>
                     <h3>Conformità Legale</h3>
                     <p>P.IVA, Cookie Policy, GDPR già configurati.</p>
                 </div>
 
                 <div class="feature-card fade-in-scroll">
-                    <div class="feature-icon">◬</div>
+                    <div class="feature-icon">
+                        <i class="ph ph-brain"></i>
+                    </div>
                     <h3>Ottimizzazione AI</h3>
                     <p>Struttura semantica per ChatGPT e Google SGE.</p>
                 </div>
@@ -296,13 +309,16 @@
                     <p>Oppure scrivici direttamente:</p>
                     <div class="contact-links">
                         <a href="https://wa.me/393270972329" class="whatsapp-link" target="_blank">
-                            <span class="wa-icon">📱</span> +39 327 097 2329
+                            <i class="ph ph-whatsapp-logo"></i>
+                            <span>+39 327 097 2329</span>
                         </a>
                         <a href="https://t.me/cinereo" class="telegram-link" target="_blank">
-                            <span class="tg-icon">✈️</span> @cinereo
+                            <i class="ph ph-telegram-logo"></i>
+                            <span>@cinereo</span>
                         </a>
                         <a href="mailto:greg@cinereo.it" class="email-link">
-                            <span class="email-icon">✉️</span> greg@cinereo.it
+                            <i class="ph ph-envelope-simple"></i>
+                            <span>greg@cinereo.it</span>
                         </a>
                     </div>
                 </div>
@@ -328,6 +344,19 @@
             <div class="footer-bottom">
                 <p>&copy; 2024 Cinereo. Tutti i diritti riservati.</p>
             </div>
+        </div>
+
+        <!-- Theme Switcher -->
+        <div class="theme-switcher">
+            <button class="theme-btn" data-theme="auto" title="Sistema">
+                <i class="ph ph-monitor"></i>
+            </button>
+            <button class="theme-btn" data-theme="light" title="Chiaro">
+                <i class="ph ph-sun"></i>
+            </button>
+            <button class="theme-btn" data-theme="dark" title="Scuro">
+                <i class="ph ph-moon"></i>
+            </button>
         </div>
     </footer>
 

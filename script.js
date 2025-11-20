@@ -1,10 +1,70 @@
 /**
  * CINEREO LANDING PAGE - INTERACTIONS
- * Smooth animations, scroll effects, form handling
+ * Smooth animations, scroll effects, form handling, theme switching
  */
+
+// ===== THEME SWITCHING =====
+(function() {
+    // Get saved theme or default to 'dark'
+    const savedTheme = localStorage.getItem('cinereo-theme') || 'dark';
+
+    // Apply theme immediately to prevent flash
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (document.body) {
+        document.body.setAttribute('data-theme', savedTheme);
+    }
+})();
 
 // ===== SMOOTH SCROLL ANIMATIONS =====
 document.addEventListener('DOMContentLoaded', function() {
+    // ===== THEME SWITCHER LOGIC =====
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    const body = document.body;
+
+    // Get current theme
+    let currentTheme = localStorage.getItem('cinereo-theme') || 'dark';
+
+    // Set initial active button
+    function updateActiveButton() {
+        themeButtons.forEach(btn => {
+            if (btn.dataset.theme === currentTheme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    // Apply theme
+    function applyTheme(theme) {
+        body.setAttribute('data-theme', theme);
+        currentTheme = theme;
+        localStorage.setItem('cinereo-theme', theme);
+        updateActiveButton();
+    }
+
+    // Initialize
+    applyTheme(currentTheme);
+
+    // Theme button click handlers
+    themeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const theme = this.dataset.theme;
+            applyTheme(theme);
+        });
+    });
+
+    // Listen for system theme changes when in auto mode
+    if (window.matchMedia) {
+        const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        darkModeQuery.addListener(function(e) {
+            if (currentTheme === 'auto') {
+                // Trigger re-render by toggling data attribute
+                body.setAttribute('data-theme', 'auto');
+            }
+        });
+    }
+
     // Intersection Observer for fade-in animations
     const observerOptions = {
         threshold: 0.1,
